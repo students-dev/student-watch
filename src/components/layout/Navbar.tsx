@@ -80,7 +80,10 @@ export default function Navbar() {
             <div className="flex items-center gap-4">
               {session ? (
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                  <Link 
+                    href="/profile"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-primary/30 transition-all"
+                  >
                     {session.user?.image ? (
                       <img src={session.user.image} alt="User" className="w-6 h-6 rounded-full" />
                     ) : (
@@ -89,7 +92,7 @@ export default function Navbar() {
                     <span className="text-[10px] font-black uppercase tracking-widest text-secondary hidden lg:inline">
                       {session.user?.name}
                     </span>
-                  </div>
+                  </Link>
                   <button 
                     onClick={() => signOut()}
                     className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 text-secondary hover:text-red-500 transition-all duration-300"

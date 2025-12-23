@@ -18,28 +18,54 @@
 }
 
 @layer base {
-  :root {
+  :root.theme-soft {
     --background: #fcfcfd;
     --foreground: #030712;
     --primary: #6366f1;
     --secondary: #64748b;
     --accent: #10b981;
     --card-bg: rgba(255, 255, 255, 0.7);
-    --radius-ultra: 2.5rem;
-    
     --grid-line: rgba(99, 102, 241, 0.04);
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: #020617;
-      --foreground: #f8fafc;
-      --primary: #818cf8;
-      --secondary: #94a3b8;
-      --accent: #34d399;
-      --card-bg: rgba(15, 23, 42, 0.7);
-      --grid-line: rgba(255, 255, 255, 0.02);
-    }
+  :root.theme-parchment {
+    --background: #fdfbf7;
+    --foreground: #433422;
+    --primary: #92400e;
+    --secondary: #78350f;
+    --accent: #065f46;
+    --card-bg: rgba(254, 243, 199, 0.5);
+    --grid-line: rgba(146, 64, 14, 0.05);
+  }
+
+  :root.theme-blueprint {
+    --background: #1e3a8a;
+    --foreground: #eff6ff;
+    --primary: #60a5fa;
+    --secondary: #93c5fd;
+    --accent: #34d399;
+    --card-bg: rgba(30, 58, 138, 0.8);
+    --grid-line: rgba(255, 255, 255, 0.1);
+  }
+
+  :root.theme-cyber {
+    --background: #09090b;
+    --foreground: #f4f4f5;
+    --primary: #d946ef;
+    --secondary: #a21caf;
+    --accent: #22d3ee;
+    --card-bg: rgba(24, 24, 27, 0.8);
+    --grid-line: rgba(217, 70, 239, 0.1);
+  }
+
+  :root.theme-midnight {
+    --background: #020617;
+    --foreground: #f8fafc;
+    --primary: #818cf8;
+    --secondary: #94a3b8;
+    --accent: #34d399;
+    --card-bg: rgba(15, 23, 42, 0.7);
+    --grid-line: rgba(255, 255, 255, 0.02);
   }
 
   body {
@@ -52,6 +78,7 @@
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 50px 50px;
     background-attachment: fixed;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 }
 

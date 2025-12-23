@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Media } from '@/types';
 import { tmdbClient } from '@/lib/api';
-import { Star, ArrowLeft, Share2, Info, ShieldCheck, Calendar, BookOpen } from 'lucide-react';
+import { Star, ArrowLeft, Share2, Info, ShieldCheck, Calendar, BookOpen, Users } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -114,12 +114,22 @@ export default function WatchPage() {
                 </p>
               </div>
 
-              <div className="mt-10 flex flex-wrap gap-2">
+              <div className="mt-10 flex flex-wrap gap-4">
                 {media?.genres.map(genre => (
                   <span key={genre} className="px-4 py-1.5 bg-primary/5 text-primary border border-primary/10 rounded-full text-[10px] font-black uppercase tracking-widest">
                     {genre}
                   </span>
                 ))}
+              </div>
+
+              <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
+                 <button 
+                   onClick={() => window.location.href = `/party/${Math.random().toString(36).substring(7)}`}
+                   className="btn-ultra !bg-indigo-500 hover:!bg-indigo-600"
+                 >
+                    <Users size={20} />
+                    Start Sync-Watch Party
+                 </button>
               </div>
             </div>
           </motion.div>

@@ -1,33 +1,66 @@
 'use client';
 
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, Send, MessageCircle, Play, Info, ShieldCheck, Share2 } from "lucide-react";
+import { Users, Send, MessageCircle, Play, Info, ShieldCheck, Share2, Loader2 } from "lucide-react";
+import { pusherClient } from "@/lib/pusher";
+import axios from "axios";
 
 export default function PartyPage() {
-  const { id } = useParams();
+  const { id: roomId } = useParams();
   const { data: session } = useSession();
-  const router = useRouter();
   const [messages, setMessages] = useState<{ user: string; text: string }[]>([
     { user: 'System', text: 'Welcome to the Safe Party! Stay focused and respect others.' }
   ]);
   const [inputText, setInputText] = useState('');
+  const [isSending, setIsSending] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!roomId) return;
+
+    const channel = pusherClient.subscribe(`party-${roomId}`);
+    
+    channel.bind("message", (data: { text: string; user: string }) => {
+      setMessages((prev) => [...prev, { user: data.user, text: data.text }]);
+    });
+
+    return () => {
+      pusherClient.unsubscribe(`party-${roomId}`);
+    };
+  }, [roomId]);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   if (!session) {
     return (
       <div className="flex items-center justify-center min-h-[70vh]">
-        <p className="font-black uppercase tracking-widest text-slate-400">Please sign in to join a party.</p>
+        <p className="font-black uppercase tracking-widest text-secondary">Please sign in to join a party.</p>
       </div>
     );
   }
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputText.trim()) return;
-    setMessages([...messages, { user: session.user?.name || 'Student', text: inputText }]);
-    setInputText('');
+    if (!inputText.trim() || isSending) return;
+
+    setIsSending(true);
+    try {
+      await axios.post("/api/party/message", {
+        roomId,
+        message: inputText,
+        user: session.user?.name || "Student",
+      });
+      setInputText('');
+    } catch (error) {
+      console.error("Failed to send:", error);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -39,7 +72,7 @@ export default function PartyPage() {
               <div className="p-2 rounded-xl bg-primary text-white">
                 <Users size={20} />
               </div>
-              <h1 className="text-xl font-black uppercase tracking-tight">Party Room: {id?.slice(0, 8)}...</h1>
+              <h1 className="text-xl font-black uppercase tracking-tight">Party Room: {(roomId as string)?.slice(0, 8)}...</h1>
            </div>
            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-[10px] font-black uppercase tracking-widest border border-accent/20">
               <ShieldCheck size={14} /> Safe Session
@@ -83,12 +116,13 @@ export default function PartyPage() {
                 <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 mb-1">{msg.user}</span>
                 <div className={`px-4 py-2 rounded-2xl text-xs font-bold ${
                   msg.user === 'System' ? 'bg-primary/10 text-primary italic' : 
-                  msg.user === session.user?.name ? 'bg-primary text-white' : 'bg-white/10 text-secondary'
+                  msg.user === session.user?.name ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-white/10 dark:bg-slate-800 text-secondary border border-white/5'
                 }`}>
                    {msg.text}
                 </div>
              </div>
            ))}
+           <div ref={chatEndRef} />
         </div>
 
         <form onSubmit={handleSendMessage} className="p-6 border-t border-white/10 flex gap-2">
@@ -97,10 +131,14 @@ export default function PartyPage() {
              value={inputText}
              onChange={(e) => setInputText(e.target.value)}
              placeholder="Type a message..."
-             className="flex-grow bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs font-medium focus:outline-none focus:border-primary/50 transition-all"
+             className="flex-grow bg-white/5 dark:bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-xs font-medium focus:outline-none focus:border-primary/50 transition-all text-foreground"
            />
-           <button type="submit" className="p-3 rounded-xl bg-primary text-white hover:scale-110 active:scale-95 transition-all">
-              <Send size={18} />
+           <button 
+             type="submit" 
+             disabled={isSending}
+             className="p-3 rounded-xl bg-primary text-white hover:scale-110 active:scale-95 transition-all disabled:opacity-50 disabled:scale-100"
+           >
+              {isSending ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
            </button>
         </form>
       </div>

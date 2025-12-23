@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import { Media } from '@/types';
 import { tmdbClient, fetchFromAniList, ANIME_QUERY, CUSTOM_GENRES } from '@/lib/api';
 import MediaCard from '@/components/home/MediaCard';
-import { Loader2 } from 'lucide-react';
+import { Loader2, BookOpen } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function GenreDetailPage() {
   const { genre } = useParams();
@@ -20,9 +21,6 @@ export default function GenreDetailPage() {
       if (!genreInfo) return;
       setLoading(true);
       try {
-        // In a real app, we would use sophisticated queries. 
-        // For now, we search by the keywords/tags defined in CUSTOM_GENRES.
-        
         const animeTag = genreInfo.animeTags[0];
         const movieKeyword = genreInfo.movieKeywords[0];
 
@@ -68,26 +66,44 @@ export default function GenreDetailPage() {
     fetchGenreContent();
   }, [genreKey]);
 
-  if (!genreInfo) return <div className="p-20 text-center">Genre not found.</div>;
+  if (!genreInfo) return <div className="p-40 text-center font-black uppercase tracking-widest text-slate-400">Resource not found.</div>;
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="mb-12">
-        <h1 className="text-4xl font-bold mb-4">{genreInfo.name}</h1>
-        <p className="text-secondary text-lg max-w-3xl">
+    <div className="container mx-auto px-4 py-20">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-16 space-y-4"
+      >
+        <div className="flex items-center gap-3">
+           <div className="p-3 rounded-2xl bg-white dark:bg-slate-900 shadow-xl shadow-primary/5 border border-slate-100 dark:border-slate-800 text-primary">
+             <BookOpen size={32} />
+           </div>
+           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Curated Genre</span>
+        </div>
+        <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase">{genreInfo.name}</h1>
+        <p className="text-secondary font-medium text-lg max-w-2xl leading-relaxed">
           {genreInfo.description}
         </p>
-      </div>
+      </motion.div>
 
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-20">
-          <Loader2 className="animate-spin text-primary mb-4" size={48} />
-          <p className="text-secondary">Curating the best content for your needs...</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+          {[...Array(12)].map((_, i) => (
+            <div key={i} className="aspect-[2/3] bg-white dark:bg-slate-900 animate-pulse rounded-[2.5rem] border border-slate-100 dark:border-slate-800" />
+          ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-          {results.map((item) => (
-            <MediaCard key={`${item.mediaType}-${item.id}`} media={item} />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+          {results.map((item, i) => (
+            <motion.div
+              key={`${item.mediaType}-${item.id}`}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: i * 0.05 }}
+            >
+              <MediaCard media={item} />
+            </motion.div>
           ))}
         </div>
       )}

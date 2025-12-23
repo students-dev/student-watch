@@ -43,15 +43,111 @@ export default function Home() {
 
   
 
-    return (
-
-      <div className="pb-32 bg-background/50">
-
-        <Hero />
+      return (
 
   
 
-        <div className="container mx-auto px-4 mt-24 space-y-32">
+        <div className="pb-32 bg-background/50">
+
+  
+
+          <Hero />
+
+  
+
+    
+
+  
+
+          <div className="container mx-auto px-4 mt-12 mb-24">
+
+  
+
+            <div className="p-8 rounded-[3rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl shadow-primary/5 flex flex-wrap items-center justify-center gap-6">
+
+  
+
+              <span className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 w-full text-center lg:w-auto lg:text-left mb-2 lg:mb-0">Quick Mood Filter:</span>
+
+  
+
+              {[
+
+  
+
+                { name: 'Exam Ready', color: 'bg-blue-500', href: '/genres/exam_time' },
+
+  
+
+                { name: 'Uplift Me', color: 'bg-yellow-500', href: '/genres/mood_off' },
+
+  
+
+                { name: 'Learning', color: 'bg-green-500', href: '/genres/educational' },
+
+  
+
+                { name: 'Focus Mode', color: 'bg-indigo-500', href: '/genres/deep_focus' },
+
+  
+
+              ].map((mood) => (
+
+  
+
+                <Link 
+
+  
+
+                  key={mood.name}
+
+  
+
+                  href={mood.href}
+
+  
+
+                  className="group flex items-center gap-3 px-6 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 hover:bg-primary transition-all duration-300"
+
+  
+
+                >
+
+  
+
+                  <div className={`w-3 h-3 rounded-full ${mood.color} group-hover:bg-white transition-colors`} />
+
+  
+
+                  <span className="text-xs font-black uppercase tracking-widest text-secondary group-hover:text-white transition-colors">{mood.name}</span>
+
+  
+
+                </Link>
+
+  
+
+              ))}
+
+  
+
+            </div>
+
+  
+
+          </div>
+
+  
+
+    
+
+  
+
+          <div className="container mx-auto px-4 space-y-32">
+
+  
+
+    
 
           {sections.map((section, idx) => (
 

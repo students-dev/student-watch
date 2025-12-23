@@ -34,6 +34,7 @@ export default function Navbar() {
     { name: 'Movies', href: '/movies' },
     { name: 'Anime', href: '/anime' },
     { name: 'Genres', href: '/genres' },
+    { name: 'Library', href: '/library' },
   ];
 
   return (

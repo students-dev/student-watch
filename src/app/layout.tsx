@@ -6,7 +6,7 @@ import Link from "next/link";
 import { GraduationCap } from "lucide-react";
 import PageTransition from "@/components/layout/PageTransition";
 import AuthProvider from "@/components/layout/AuthProvider";
-import FocusTimer from "@/components/features/FocusTimer";
+import { LibraryProvider } from "@/context/LibraryContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,21 +30,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-      >
-        <AuthProvider>
-          <Navbar />
-          <main className="flex-grow">
-            <PageTransition>
-              {children}
-            </PageTransition>
-          </main>
-          <FocusTimer />
-        </AuthProvider>
-
-
-                <footer className="bg-black border-t border-white/5 pt-20 pb-10">
+            <body
+              className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+            >
+              <AuthProvider>
+                <LibraryProvider>
+                  <Navbar />
+                  <main className="flex-grow">
+                    <PageTransition>
+                      {children}
+                    </PageTransition>
+                  </main>
+                </LibraryProvider>
+              </AuthProvider>
+                      <footer className="bg-black border-t border-white/5 pt-20 pb-10">
 
                   <div className="max-w-7xl mx-auto px-4">
 

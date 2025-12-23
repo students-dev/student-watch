@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { GraduationCap, Search, Menu, X, Heart } from 'lucide-react';
+import { GraduationCap, Search, Menu, X, Heart, LogIn, LogOut, User } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function Navbar() {
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
@@ -74,9 +76,40 @@ export default function Navbar() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={18} />
             </form>
             
-            <Link href="/credits" className="p-3 rounded-2xl bg-red-50 dark:bg-red-500/10 text-red-500 hover:scale-110 hover:rotate-12 transition-all duration-300">
-              <Heart size={20} fill="currentColor" />
-            </Link>
+            <div className="flex items-center gap-4">
+              {session ? (
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+                    {session.user?.image ? (
+                      <img src={session.user.image} alt="User" className="w-6 h-6 rounded-full" />
+                    ) : (
+                      <User size={16} className="text-primary" />
+                    )}
+                    <span className="text-[10px] font-black uppercase tracking-widest text-secondary hidden lg:inline">
+                      {session.user?.name}
+                    </span>
+                  </div>
+                  <button 
+                    onClick={() => signOut()}
+                    className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 text-secondary hover:text-red-500 transition-all duration-300"
+                  >
+                    <LogOut size={20} />
+                  </button>
+                </div>
+              ) : (
+                <button 
+                  onClick={() => signIn('github')}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-primary text-white font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20"
+                >
+                  <LogIn size={18} />
+                  Sign In
+                </button>
+              )}
+              
+              <Link href="/credits" className="p-3 rounded-2xl bg-red-50 dark:bg-red-500/10 text-red-500 hover:scale-110 hover:rotate-12 transition-all duration-300">
+                <Heart size={20} fill="currentColor" />
+              </Link>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}

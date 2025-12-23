@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Link from "next/link";
 import { GraduationCap } from "lucide-react";
 import PageTransition from "@/components/layout/PageTransition";
+import AuthProvider from "@/components/layout/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,12 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Navbar />
-        <main className="flex-grow">
-          <PageTransition>
-            {children}
-          </PageTransition>
-        </main>
+        <AuthProvider>
+          <Navbar />
+          <main className="flex-grow">
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </main>
+        </AuthProvider>
 
 
                 <footer className="bg-black border-t border-white/5 pt-20 pb-10">

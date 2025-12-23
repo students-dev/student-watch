@@ -33,6 +33,7 @@ export default function Navbar() {
     { name: 'Home', href: '/' },
     { name: 'Movies', href: '/movies' },
     { name: 'Anime', href: '/anime' },
+    { name: 'Top Rated', href: '/top-rated' },
     { name: 'Genres', href: '/genres' },
     { name: 'Library', href: '/library' },
   ];

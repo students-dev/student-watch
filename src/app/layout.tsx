@@ -96,61 +96,181 @@ export default function RootLayout({
 
               
 
-              <div>
+                            <div>
 
-                <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em]">Navigation</h4>
+        
 
-                <ul className="space-y-4 text-sm font-bold text-secondary">
+              
 
-                  <li><Link href="/movies" className="hover:text-primary transition-colors">Movies</Link></li>
+                              <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em]">Explore</h4>
 
-                  <li><Link href="/anime" className="hover:text-primary transition-colors">Anime</Link></li>
+        
 
-                  <li><Link href="/genres" className="hover:text-primary transition-colors">Custom Genres</Link></li>
+              
 
-                </ul>
+                              <ul className="space-y-4 text-sm font-bold text-secondary">
 
-              </div>
+        
 
+              
 
+                                <li><Link href="/movies" className="hover:text-primary transition-colors">Movies</Link></li>
 
-                                          <div>
+        
 
+              
 
+                                <li><Link href="/anime" className="hover:text-primary transition-colors">Anime</Link></li>
 
-                                            <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em]">Platform</h4>
+        
 
+              
 
+                                <li><Link href="/top-rated" className="hover:text-primary transition-colors">Top Rated</Link></li>
 
-                                            <ul className="space-y-4 text-sm font-bold text-secondary">
+        
 
+              
 
+                                <li><Link href="/genres" className="hover:text-primary transition-colors">Custom Genres</Link></li>
 
-                                              <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
+        
 
+              
 
+                              </ul>
 
-                                              <li><Link href="/credits" className="hover:text-primary transition-colors">Credits</Link></li>
+        
 
+              
 
+                            </div>
 
-                                              <li><Link href="/developers" className="hover:text-primary transition-colors">Developers</Link></li>
+        
 
+              
 
+              
 
-                                              <li><Link href="/changelog" className="hover:text-primary transition-colors">Changelog</Link></li>
+        
 
+              
 
+                            <div>
 
-                                              <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
+        
 
+              
 
+                              <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em]">Support</h4>
 
-                                            </ul>
+        
 
+              
 
+                              <ul className="space-y-4 text-sm font-bold text-secondary">
 
-                                          </div>
+        
+
+              
+
+                                <li><Link href="/study-tips" className="hover:text-primary transition-colors">Study Tips</Link></li>
+
+        
+
+              
+
+                                <li><Link href="/faq" className="hover:text-primary transition-colors">FAQ</Link></li>
+
+        
+
+              
+
+                                <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
+
+        
+
+              
+
+                                <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
+
+        
+
+              
+
+                              </ul>
+
+        
+
+              
+
+                            </div>
+
+        
+
+              
+
+              
+
+        
+
+              
+
+                            <div>
+
+        
+
+              
+
+                              <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em]">Platform</h4>
+
+        
+
+              
+
+                              <ul className="space-y-4 text-sm font-bold text-secondary">
+
+        
+
+              
+
+                                <li><Link href="/credits" className="hover:text-primary transition-colors">Credits</Link></li>
+
+        
+
+              
+
+                                <li><Link href="/developers" className="hover:text-primary transition-colors">Developers</Link></li>
+
+        
+
+              
+
+                                <li><Link href="/changelog" className="hover:text-primary transition-colors">Changelog</Link></li>
+
+        
+
+              
+
+                                <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
+
+        
+
+              
+
+                              </ul>
+
+        
+
+              
+
+                            </div>
+
+        
+
+              
+
+              
 
 
 

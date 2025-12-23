@@ -6,6 +6,7 @@ import Link from "next/link";
 import { GraduationCap } from "lucide-react";
 import PageTransition from "@/components/layout/PageTransition";
 import AuthProvider from "@/components/layout/AuthProvider";
+import FocusTimer from "@/components/features/FocusTimer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
               {children}
             </PageTransition>
           </main>
+          <FocusTimer />
         </AuthProvider>
 
 

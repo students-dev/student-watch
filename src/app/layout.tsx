@@ -104,39 +104,47 @@ export default function RootLayout({
 
 
 
-                            <div>
+                                          <div>
 
 
 
-                              <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em]">Platform</h4>
+                                            <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em]">Platform</h4>
 
 
 
-                              <ul className="space-y-4 text-sm font-bold text-secondary">
+                                            <ul className="space-y-4 text-sm font-bold text-secondary">
 
 
 
-                                <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
+                                              <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
 
 
 
-                                <li><Link href="/credits" className="hover:text-primary transition-colors">Credits</Link></li>
+                                              <li><Link href="/credits" className="hover:text-primary transition-colors">Credits</Link></li>
 
 
 
-                                <li><Link href="/changelog" className="hover:text-primary transition-colors">Changelog</Link></li>
+                                              <li><Link href="/developers" className="hover:text-primary transition-colors">Developers</Link></li>
 
 
 
-                                <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
+                                              <li><Link href="/changelog" className="hover:text-primary transition-colors">Changelog</Link></li>
 
 
 
-                              </ul>
+                                              <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
 
 
 
-                            </div>
+                                            </ul>
+
+
+
+                                          </div>
+
+
+
+                            
 
 
 

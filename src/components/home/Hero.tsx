@@ -1,70 +1,65 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Sparkles, BookOpen, GraduationCap, ArrowRight, Play, CheckCircle } from 'lucide-react';
+import { Sparkles, BookOpen, GraduationCap, ArrowRight, Play, CheckCircle, Shield, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Hero() {
-  const floatingIcons = [
-    { icon: <BookOpen size={24} />, x: '-10%', y: '10%', delay: 0 },
-    { icon: <GraduationCap size={30} />, x: '15%', y: '-15%', delay: 1 },
-    { icon: <Sparkles size={20} />, x: '-20%', y: '-20%', delay: 2 },
-  ];
-
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-24">
-      {/* Background Elements */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 mesh-bg">
+      {/* Dynamic Aura Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(79,70,229,0.08),transparent_70%)]" />
-        {floatingIcons.map((item, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0 }}
-            animate={{ 
-              opacity: [0.2, 0.5, 0.2],
-              y: [0, -20, 0],
-              x: [0, 10, 0]
-            }}
-            transition={{ duration: 5, repeat: Infinity, delay: item.delay }}
-            className="absolute text-primary/20 hidden lg:block"
-            style={{ left: `calc(50% + ${item.x})`, top: `calc(50% + ${item.y})` }}
-          >
-            {item.icon}
-          </motion.div>
-        ))}
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
+            opacity: [0.3, 0.5, 0.3]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] bg-primary/20 rounded-full blur-[160px]"
+        />
+        <motion.div 
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            rotate: [90, 0, 90],
+            opacity: [0.2, 0.4, 0.2]
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-[20%] -right-[10%] w-[60%] h-[60%] bg-indigo-500/20 rounded-full blur-[160px]"
+        />
       </div>
 
       <div className="container mx-auto px-4 relative z-10 text-center">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl shadow-primary/5 mb-10"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 dark:border-slate-800/20 shadow-2xl mb-12 animate-glow"
         >
-          <CheckCircle size={16} className="text-accent" />
-          <span className="text-sm font-black uppercase tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-primary to-indigo-600">
-            100% Student Verified & Safe
+          <div className="bg-primary p-1 rounded-full text-white">
+            <Shield size={12} />
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">
+            Certified Secure & Ad-Free
           </span>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-6xl md:text-9xl font-black mb-8 tracking-tighter leading-[0.85]"
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-6"
         >
-          STUDY HARD. <br />
-          <span className="animate-text-reveal">WATCH EASY.</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="max-w-3xl mx-auto text-xl md:text-2xl text-secondary mb-12 leading-relaxed font-medium"
-        >
-          The ultimate sanctuary for students. High-quality movies and anime, 
-          filtered for your peace of mind. No 18+, no clutter, just inspiration.
-        </motion.p>
+          <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] uppercase text-gradient">
+            ELEVATE <br />
+            <span className="animate-text-reveal">WATCHING.</span>
+          </h1>
+          
+          <p className="max-w-3xl mx-auto text-xl md:text-2xl text-secondary mb-16 leading-relaxed font-medium tracking-tight px-4">
+            The world's most sophisticated streaming platform for students. 
+            Curated, filtered, and optimized for your academic and mental well-being.
+          </p>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -72,33 +67,34 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="flex flex-wrap justify-center gap-6"
         >
-          <Link href="/genres" className="btn-premium group">
-            Start Exploring
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+          <Link href="/genres" className="btn-ultra group">
+            Start Experience
+            <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform duration-500" />
           </Link>
-          <Link href="/movies" className="btn-outline">
-            <Play size={20} />
-            Browse Movies
+          <Link href="/movies" className="btn-ultra-outline group">
+            <Zap size={18} className="text-primary group-hover:rotate-12 transition-transform" />
+            Browse Safe Library
           </Link>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
+          transition={{ delay: 1, duration: 2 }}
+          className="mt-32 flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-1000"
         >
-          {[
-            { label: 'SAFE CONTENT', value: '100%' },
-            { label: 'CURATED GENRES', value: '12+' },
-            { label: 'COMMUNITY', value: '1k+' },
-            { label: 'STUDY FOCUS', value: '10/10' },
-          ].map((stat, i) => (
-            <div key={i} className="text-center p-6 rounded-[2rem] bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm border border-white/20">
-              <p className="text-3xl font-black text-primary mb-1">{stat.value}</p>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{stat.label}</p>
-            </div>
-          ))}
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-4xl font-black tracking-tighter">100%</span>
+            <span className="text-[8px] font-black uppercase tracking-widest">Safe Content</span>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-4xl font-black tracking-tighter">Edge</span>
+            <span className="text-[8px] font-black uppercase tracking-widest">Ultra Low Latency</span>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+             <span className="text-4xl font-black tracking-tighter">4K+</span>
+             <span className="text-[8px] font-black uppercase tracking-widest">Library Titles</span>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -3,32 +3,31 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #fdfdfe;
-  --color-foreground: #020617;
-  --color-primary: #4f46e5;
-  --color-primary-hover: #4338ca;
+  --color-background: #fcfcfd;
+  --color-foreground: #030712;
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
   --color-secondary: #64748b;
   --color-accent: #10b981;
-  --color-card-bg: #ffffff;
+  --color-card-bg: rgba(255, 255, 255, 0.7);
   
-  /* Scholarly Accents */
-  --color-paper: #f9fafb;
-  --color-ink: #1e293b;
-  --color-highlighter: #fde047;
-  --color-pencil: #94a3b8;
+  /* Luxury Scholarly Palette */
+  --color-parchment: #fdfbf7;
+  --color-royal: #1e1b4b;
+  --color-gold: #fbbf24;
 }
 
 @layer base {
   :root {
-    --background: #fdfdfe;
-    --foreground: #020617;
-    --primary: #4f46e5;
+    --background: #fcfcfd;
+    --foreground: #030712;
+    --primary: #6366f1;
     --secondary: #64748b;
     --accent: #10b981;
-    --card-bg: #ffffff;
-    --radius-premium: 2rem;
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --radius-ultra: 2.5rem;
     
-    --paper-line: rgba(79, 70, 229, 0.05);
+    --grid-line: rgba(99, 102, 241, 0.04);
   }
 
   @media (prefers-color-scheme: dark) {
@@ -38,8 +37,8 @@
       --primary: #818cf8;
       --secondary: #94a3b8;
       --accent: #34d399;
-      --card-bg: #0f172a;
-      --paper-line: rgba(255, 255, 255, 0.03);
+      --card-bg: rgba(15, 23, 42, 0.7);
+      --grid-line: rgba(255, 255, 255, 0.02);
     }
   }
 
@@ -49,47 +48,63 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     background-image: 
-      linear-gradient(var(--paper-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--paper-line) 1px, transparent 1px),
-      linear-gradient(var(--paper-line) 0.5px, transparent 0.5px),
-      linear-gradient(90deg, var(--paper-line) 0.5px, transparent 0.5px);
-    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 50px 50px;
     background-attachment: fixed;
   }
 }
 
 @layer components {
   .glass-nav {
-    @apply sticky top-0 z-50 backdrop-blur-xl bg-white/70 dark:bg-slate-950/70 border-b border-slate-200/50 dark:border-slate-800/50 transition-all duration-500;
+    @apply sticky top-0 z-50 backdrop-blur-2xl bg-white/40 dark:bg-slate-950/40 border-b border-white/20 dark:border-slate-800/20 transition-all duration-700;
   }
 
-  .premium-card {
-    @apply relative overflow-hidden rounded-[2rem] bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2;
+  .ultra-card {
+    @apply relative overflow-hidden rounded-[2.5rem] bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-white/20 dark:border-slate-800/20 shadow-2xl shadow-primary/5 transition-all duration-700 hover:shadow-primary/15 hover:-translate-y-3;
   }
 
-  .btn-premium {
-    @apply px-8 py-3 rounded-full bg-primary text-white font-bold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-primary/25 hover:shadow-primary/40 flex items-center gap-2;
+  .btn-ultra {
+    @apply px-10 py-4 rounded-full bg-gradient-to-r from-primary to-indigo-600 text-white font-black uppercase tracking-[0.2em] text-[10px] transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl shadow-primary/30 hover:shadow-primary/50 flex items-center gap-3;
   }
 
-  .btn-outline {
-    @apply px-8 py-3 rounded-full border-2 border-slate-200 dark:border-slate-800 font-bold transition-all duration-300 hover:border-primary hover:text-primary active:scale-95 flex items-center gap-2;
+  .btn-ultra-outline {
+    @apply px-10 py-4 rounded-full border-2 border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm font-black uppercase tracking-[0.2em] text-[10px] transition-all duration-500 hover:border-primary hover:text-primary active:scale-95 flex items-center gap-3;
   }
 
-  .section-heading {
-    @apply text-4xl font-black tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-500 dark:from-white dark:to-slate-400;
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-slate-950 via-slate-700 to-slate-500 dark:from-white dark:via-slate-300 dark:to-slate-500;
   }
 }
 
-.animate-text-reveal {
-  background: linear-gradient(to right, var(--primary), #ec4899, var(--primary));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 5s linear infinite;
+/* Advanced Mesh Background for specific sections */
+.mesh-bg {
+  background-color: var(--background);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(244, 63, 94, 0.05) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
 }
 
-@keyframes shine {
-  to { background-position: 200% center; }
+.animate-glow {
+  animation: glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 20px -10px var(--primary); }
+  to { box-shadow: 0 0 40px -5px var(--primary); }
+}
+
+.scrollbar-ultra::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-ultra::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+.scrollbar-ultra::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 dark:bg-slate-800 rounded-full hover:bg-primary transition-colors;
 }
 
 @layer components {

@@ -8,6 +8,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import AuthProvider from "@/components/layout/AuthProvider";
 import { LibraryProvider } from "@/context/LibraryContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,12 +46,14 @@ export default function RootLayout({
                         <ThemeProvider>
                           <LibraryProvider>
                             <Navbar />
-                            <main className="flex-grow">
-                              <PageTransition>
-                                {children}
-                              </PageTransition>
-                            </main>
-                          </LibraryProvider>
+                                        <main className="flex-grow">
+                                          <PageTransition>
+                                            {children}
+                                          </PageTransition>
+                                        </main>
+                                        <Analytics />
+                                      </LibraryProvider>
+                            
                         </ThemeProvider>
                       </AuthProvider>
                           

@@ -63,13 +63,13 @@ export default function WatchPage() {
           </div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-16">
+        <div className="grid lg:grid-cols-3 gap-8 lg:gap-16">
           {/* Main Column */}
-          <div className="lg:col-span-2 space-y-12">
+          <div className="lg:col-span-2 space-y-8 md:space-y-12">
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="relative aspect-video bg-black rounded-[3.5rem] overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)] border-[12px] border-white dark:border-slate-800"
+              className="relative aspect-video bg-black rounded-[2rem] md:rounded-[3.5rem] overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)] border-[6px] md:border-[12px] border-white dark:border-slate-800"
             >
               <iframe
                 src={embedUrl}
@@ -79,7 +79,7 @@ export default function WatchPage() {
               />
             </motion.div>
 
-            <div className="space-y-10">
+            <div className="space-y-8 md:space-y-10">
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -87,48 +87,48 @@ export default function WatchPage() {
                 className="space-y-4"
               >
                 <div className="flex flex-wrap items-center gap-3">
-                   <span className="px-4 py-1.5 rounded-xl bg-primary text-white text-[10px] font-black uppercase tracking-widest">{type}</span>
-                   {media.tagline && <span className="text-secondary font-bold italic text-sm">"{media.tagline}"</span>}
+                   <span className="px-3 md:px-4 py-1.5 rounded-xl bg-primary text-white text-[8px] md:text-[10px] font-black uppercase tracking-widest">{type}</span>
+                   {media.tagline && <span className="text-secondary font-bold italic text-xs md:text-sm">"{media.tagline}"</span>}
                 </div>
-                <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase text-gradient leading-[0.85]">{media.title}</h1>
+                <h1 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter uppercase text-gradient leading-[0.85]">{media.title}</h1>
               </motion.div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                 <div className="p-6 rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
-                    <Star className="mx-auto mb-2 text-gold" size={24} fill="currentColor" />
-                    <p className="text-xl font-black tracking-tighter">{media.voteAverage.toFixed(1)}</p>
-                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">TMDB Rating</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                 <div className="p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
+                    <Star className="mx-auto mb-2 text-gold w-5 h-5 md:w-6 md:h-6" size={24} fill="currentColor" />
+                    <p className="text-lg md:text-xl font-black tracking-tighter">{media.voteAverage.toFixed(1)}</p>
+                    <p className="text-[7px] md:text-[8px] font-black uppercase tracking-widest text-slate-400">TMDB Rating</p>
                  </div>
-                 <div className="p-6 rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
-                    <Clock className="mx-auto mb-2 text-primary" size={24} />
-                    <p className="text-xl font-black tracking-tighter">{media.runtime}m</p>
-                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Duration</p>
+                 <div className="p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
+                    <Clock className="mx-auto mb-2 text-primary w-5 h-5 md:w-6 md:h-6" size={24} />
+                    <p className="text-lg md:text-xl font-black tracking-tighter">{media.runtime}m</p>
+                    <p className="text-[7px] md:text-[8px] font-black uppercase tracking-widest text-slate-400">Duration</p>
                  </div>
-                 <div className="p-6 rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
-                    <Calendar className="mx-auto mb-2 text-accent" size={24} />
-                    <p className="text-xl font-black tracking-tighter">{media.releaseDate.split('-')[0]}</p>
-                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Release Year</p>
+                 <div className="p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
+                    <Calendar className="mx-auto mb-2 text-accent w-5 h-5 md:w-6 md:h-6" size={24} />
+                    <p className="text-lg md:text-xl font-black tracking-tighter">{media.releaseDate.split('-')[0]}</p>
+                    <p className="text-[7px] md:text-[8px] font-black uppercase tracking-widest text-slate-400">Release Year</p>
                  </div>
-                 <div className="p-6 rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
-                    <ShieldCheck className="mx-auto mb-2 text-emerald-500" size={24} />
-                    <p className="text-xl font-black tracking-tighter">Safe</p>
-                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Content Status</p>
+                 <div className="p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
+                    <ShieldCheck className="mx-auto mb-2 text-emerald-500 w-5 h-5 md:w-6 md:h-6" size={24} />
+                    <p className="text-lg md:text-xl font-black tracking-tighter">Safe</p>
+                    <p className="text-[7px] md:text-[8px] font-black uppercase tracking-widest text-slate-400">Content Status</p>
                  </div>
               </div>
 
-              <div className="space-y-6">
-                <h3 className="text-xs font-black uppercase tracking-[0.5em] text-primary">The Narrative</h3>
-                <p className="text-xl text-secondary leading-relaxed font-medium">
+              <div className="space-y-4 md:space-y-6">
+                <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-primary">The Narrative</h3>
+                <p className="text-lg md:text-xl text-secondary leading-relaxed font-medium">
                   {media.overview}
                 </p>
               </div>
 
-              <div className="space-y-8">
-                <h3 className="text-xs font-black uppercase tracking-[0.5em] text-primary">Top Billing Cast</h3>
-                <div className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide">
+              <div className="space-y-6 md:space-y-8">
+                <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-primary">Top Billing Cast</h3>
+                <div className="flex gap-4 md:gap-6 overflow-x-auto pb-6 scrollbar-hide">
                    {media.cast?.map((person: any) => (
-                     <div key={person.id} className="min-w-[120px] text-center space-y-3">
-                        <div className="relative aspect-square rounded-[2rem] overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl">
+                     <div key={person.id} className="min-w-[100px] md:min-w-[120px] text-center space-y-3">
+                        <div className="relative aspect-square rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border-2 md:border-4 border-white dark:border-slate-800 shadow-xl">
                            <Image 
                              src={person.profilePath || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop'} 
                              alt={person.name} 
@@ -137,8 +137,8 @@ export default function WatchPage() {
                            />
                         </div>
                         <div>
-                           <p className="text-[10px] font-black uppercase tracking-tight leading-none mb-1">{person.name}</p>
-                           <p className="text-[8px] text-slate-400 font-bold uppercase tracking-widest">{person.character}</p>
+                           <p className="text-[8px] md:text-[10px] font-black uppercase tracking-tight leading-none mb-1">{person.name}</p>
+                           <p className="text-[7px] md:text-[8px] text-slate-400 font-bold uppercase tracking-widest">{person.character}</p>
                         </div>
                      </div>
                    ))}
@@ -148,33 +148,33 @@ export default function WatchPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-12">
+          <div className="space-y-8 md:space-y-12">
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="ultra-card p-10 space-y-8"
+              className="ultra-card p-6 md:p-10 space-y-6 md:space-y-8"
             >
               <div className="space-y-2">
-                 <h2 className="text-2xl font-black uppercase tracking-tighter">Sync-Watch</h2>
-                 <p className="text-xs text-slate-400 font-bold tracking-widest uppercase">Start a shared session</p>
+                 <h2 className="text-xl md:text-2xl font-black uppercase tracking-tighter">Sync-Watch</h2>
+                 <p className="text-[10px] text-slate-400 font-bold tracking-widest uppercase">Start a shared session</p>
               </div>
               <p className="text-sm text-secondary leading-relaxed font-medium">
                 Host a virtual study break! Watch together with friends in a safe, ad-free environment.
               </p>
               <button 
                 onClick={() => window.location.href = `/party/${Math.random().toString(36).substring(7)}?type=${type}&id=${id}`}
-                className="btn-ultra w-full !py-5"
+                className="btn-ultra w-full !py-4 md:!py-5"
               >
                 <Users size={20} />
                 Launch Party Room
               </button>
             </motion.div>
 
-            <div className="space-y-8">
-               <h3 className="text-xs font-black uppercase tracking-[0.5em] text-slate-400 px-4">Recommendations</h3>
-               <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-6 md:space-y-8">
+               <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-400 px-4">Recommendations</h3>
+               <div className="grid grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6">
                   {media.recommendations?.map((item: any) => (
-                    <div key={item.id} className="scale-90">
+                    <div key={item.id} className="scale-100 lg:scale-95 xl:scale-100">
                        <MediaCard media={item} />
                     </div>
                   ))}

@@ -6,6 +6,7 @@ import { Star, Play, Tv, Bookmark, BookmarkCheck } from 'lucide-react';
 import { Media } from '@/types';
 import { motion } from 'framer-motion';
 import { useLibrary } from '@/context/LibraryContext';
+import { toast } from 'sonner';
 
 interface MediaCardProps {
   media: Media;
@@ -20,8 +21,10 @@ export default function MediaCard({ media }: MediaCardProps) {
     e.stopPropagation();
     if (bookmarked) {
       removeFromLibrary(media.id);
+      toast.error(`${media.title} removed from library`);
     } else {
       addToLibrary(media);
+      toast.success(`${media.title} added to library`);
     }
   };
 

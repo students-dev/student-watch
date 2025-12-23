@@ -9,6 +9,7 @@ import { pusherClient } from "@/lib/pusher";
 import axios from "axios";
 import { getMediaDetails } from "@/lib/api";
 import Link from "next/link";
+import { toast } from "sonner";
 
 function PartyContent() {
   const { id: roomId } = useParams();
@@ -126,7 +127,7 @@ function PartyContent() {
               <button 
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
-                  alert("Link copied to clipboard!");
+                  toast.success("Invite link copied to clipboard!");
                 }}
                 className="btn-ultra !px-6 !py-3 !text-[8px]"
               >

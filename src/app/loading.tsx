@@ -1,36 +1,71 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { GraduationCap } from 'lucide-react';
+
 export default function Loading() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh]">
-      <div className="relative w-24 h-24">
-        {/* Animated Rings */}
-        <div className="absolute inset-0 border-4 border-primary/20 rounded-full" />
-        <div className="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+    <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background/80 backdrop-blur-2xl">
+      <div className="relative">
+        {/* Outer Pulsing Rings */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.3, 0.1],
+          }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-[-40px] rounded-full bg-primary/20 blur-2xl"
+        />
         
-        {/* Center Logo/Icon */}
+        {/* Spinning Outer Orbit */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+          className="w-32 h-32 rounded-full border-t-2 border-b-2 border-primary/30"
+        />
+
+        {/* Inner Logo */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/40 animate-pulse">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-              <path d="M6 12v5c3 3 9 3 12 0v-5" />
-            </svg>
-          </div>
+          <motion.div
+            animate={{
+              y: [0, -10, 0],
+              rotateY: [0, 360],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="p-5 rounded-[2rem] bg-primary text-white shadow-2xl shadow-primary/40"
+          >
+            <GraduationCap size={40} />
+          </motion.div>
         </div>
       </div>
-      
-      <div className="mt-8 text-center">
-        <h2 className="text-xl font-bold tracking-tight">Curating your experience...</h2>
-        <p className="text-secondary text-sm font-medium mt-1">Safe & Focused Streaming</p>
-      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="mt-12 text-center"
+      >
+        <h2 className="text-2xl font-black uppercase tracking-[0.5em] text-gradient">
+          Preparing Session
+        </h2>
+        <div className="flex gap-1 justify-center mt-4">
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              animate={{
+                scale: [1, 1.5, 1],
+                opacity: [0.3, 1, 0.3],
+              }}
+              transition={{
+                duration: 1,
+                repeat: Infinity,
+                delay: i * 0.2,
+              }}
+              className="w-1.5 h-1.5 rounded-full bg-primary"
+            />
+          ))}
+        </div>
+      </motion.div>
     </div>
   );
 }

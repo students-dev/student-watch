@@ -38,7 +38,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`glass-nav ${scrolled ? 'py-2 shadow-2xl shadow-primary/5' : 'py-5'}`}>
+    <nav className={`glass-nav ${scrolled ? 'py-2 shadow-2xl shadow-black/5' : 'py-5'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-12 items-center">
           <div className="flex items-center gap-12">
@@ -46,7 +46,7 @@ export default function Navbar() {
               <div className="bg-primary text-white p-2 rounded-2xl group-hover:rotate-12 transition-transform duration-500 shadow-lg shadow-primary/30">
                 <GraduationCap size={28} />
               </div>
-              <span className="hidden sm:inline font-black text-2xl tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">
+              <span className="hidden sm:inline font-black text-2xl tracking-tighter text-foreground uppercase">
                 STUDENT WATCH
               </span>
             </Link>
@@ -72,7 +72,7 @@ export default function Navbar() {
                 placeholder="Search resources..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-6 py-3 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-transparent focus:bg-white dark:focus:bg-slate-900 focus:border-primary/20 focus:outline-none focus:ring-8 focus:ring-primary/5 text-sm w-48 lg:w-80 transition-all duration-500 font-medium"
+                className="pl-12 pr-6 py-3 rounded-2xl bg-slate-500/5 dark:bg-white/5 border border-transparent focus:bg-white dark:focus:bg-black focus:border-primary/20 focus:outline-none focus:ring-8 focus:ring-primary/5 text-sm w-48 lg:w-80 transition-all duration-500 font-medium text-foreground"
               />
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={18} />
             </form>
@@ -82,7 +82,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-4">
                   <Link 
                     href="/profile"
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-primary/30 transition-all"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-white/10 dark:bg-black/10 border border-white/10 hover:border-primary/30 transition-all"
                   >
                     {session.user?.image ? (
                       <img src={session.user.image} alt="User" className="w-6 h-6 rounded-full" />
@@ -95,7 +95,7 @@ export default function Navbar() {
                   </Link>
                   <button 
                     onClick={() => signOut()}
-                    className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 text-secondary hover:text-red-500 transition-all duration-300"
+                    className="p-3 rounded-2xl bg-white/10 dark:bg-black/10 text-secondary hover:text-red-500 transition-all duration-300"
                   >
                     <LogOut size={20} />
                   </button>
@@ -110,7 +110,7 @@ export default function Navbar() {
                 </button>
               )}
               
-              <Link href="/credits" className="p-3 rounded-2xl bg-red-50 dark:bg-red-500/10 text-red-500 hover:scale-110 hover:rotate-12 transition-all duration-300">
+              <Link href="/credits" className="p-3 rounded-2xl bg-red-500/10 text-red-500 hover:scale-110 hover:rotate-12 transition-all duration-300">
                 <Heart size={20} fill="currentColor" />
               </Link>
             </div>

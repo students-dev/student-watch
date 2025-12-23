@@ -1,21 +1,28 @@
 'use client';
 
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState, useRef } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, Send, MessageCircle, Play, Info, ShieldCheck, Share2, Loader2 } from "lucide-react";
+import { Users, Send, MessageCircle, Play, Info, ShieldCheck, Share2, Loader2, ArrowLeft } from "lucide-react";
 import { pusherClient } from "@/lib/pusher";
 import axios from "axios";
+import { getMediaDetails } from "@/lib/api";
+import Link from "next/link";
 
-export default function PartyPage() {
+function PartyContent() {
   const { id: roomId } = useParams();
+  const searchParams = useSearchParams();
+  const mediaType = searchParams.get('type');
+  const mediaId = searchParams.get('id');
+  
   const { data: session } = useSession();
   const [messages, setMessages] = useState<{ user: string; text: string }[]>([
     { user: 'System', text: 'Welcome to the Safe Party! Stay focused and respect others.' }
   ]);
   const [inputText, setInputText] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const [media, setMedia] = useState<any>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,6 +38,16 @@ export default function PartyPage() {
       pusherClient.unsubscribe(`party-${roomId}`);
     };
   }, [roomId]);
+
+  useEffect(() => {
+    async function fetchMedia() {
+      if (mediaType && mediaId) {
+        const data = await getMediaDetails(mediaType, mediaId);
+        setMedia(data);
+      }
+    }
+    fetchMedia();
+  }, [mediaType, mediaId]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -63,43 +80,67 @@ export default function PartyPage() {
     }
   };
 
+  const embedUrl = mediaType === 'movie' 
+    ? `https://vidify.top/embed/movie/${mediaId}`
+    : `https://vidify.top/embed/tv/${mediaId}/1/1`;
+
   return (
     <div className="flex flex-col lg:flex-row h-screen pt-20 overflow-hidden bg-background">
       {/* Left: Player & Info */}
       <div className="flex-grow flex flex-col p-6 lg:p-10 space-y-6 overflow-y-auto scrollbar-hide">
         <div className="flex items-center justify-between mb-2">
            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-primary text-white">
-                <Users size={20} />
+              <Link href={`/watch/${mediaType}/${mediaId}`} className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-secondary hover:text-primary transition-all">
+                <ArrowLeft size={20} />
+              </Link>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-black uppercase tracking-widest text-primary">Live Sync-Watch</span>
+                <h1 className="text-xl font-black uppercase tracking-tight">{media?.title || 'Loading...'}</h1>
               </div>
-              <h1 className="text-xl font-black uppercase tracking-tight">Party Room: {(roomId as string)?.slice(0, 8)}...</h1>
            </div>
            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-[10px] font-black uppercase tracking-widest border border-accent/20">
-              <ShieldCheck size={14} /> Safe Session
+              <ShieldCheck size={14} /> Room ID: {(roomId as string)?.slice(0, 6)}
            </div>
         </div>
 
-        <div className="relative aspect-video bg-black rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white/5">
-           <div className="absolute inset-0 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm z-10">
-              <div className="text-center">
-                 <Play size={64} className="text-white mx-auto mb-4 opacity-50" />
-                 <p className="text-white/50 font-black uppercase tracking-widest text-xs">Waiting for leader to start...</p>
-              </div>
-           </div>
-           {/* In a real app, the iframe would be here */}
+        <div className="relative aspect-video bg-black rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white/5 dark:border-slate-800">
+           {mediaId ? (
+             <iframe
+               src={embedUrl}
+               className="absolute inset-0 w-full h-full border-0"
+               allowFullScreen
+               allow="autoplay; encrypted-media"
+             />
+           ) : (
+             <div className="absolute inset-0 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm z-10">
+                <div className="text-center">
+                   <Play size={64} className="text-white mx-auto mb-4 opacity-50" />
+                   <p className="text-white/50 font-black uppercase tracking-widest text-xs">Waiting for leader to start...</p>
+                </div>
+             </div>
+           )}
         </div>
 
         <div className="ultra-card p-8">
            <h2 className="text-xl font-black uppercase tracking-tight mb-4 flex items-center gap-2">
-              <Info size={18} className="text-primary" /> How it works
+              <Users size={18} className="text-primary" /> Student Social
            </h2>
            <p className="text-secondary text-sm font-medium leading-relaxed">
-              Sync-Watch allows you to watch content simultaneously with other students. 
-              The room leader controls play/pause. All content is filtered through our **Safe-Curation** engine.
+              You are watching **{media?.title}** with other students. 
+              The Sync-Watch system ensures everyone is on the same page. 
+              Use the chat to discuss key scenes or study concepts!
            </p>
-           <button className="mt-6 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary hover:scale-105 transition-all">
-              <Share2 size={14} /> Invite other students
-           </button>
+           <div className="mt-6 flex flex-wrap gap-3">
+              <button 
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert("Link copied to clipboard!");
+                }}
+                className="btn-ultra !px-6 !py-3 !text-[8px]"
+              >
+                <Share2 size={14} /> Copy Invite Link
+              </button>
+           </div>
         </div>
       </div>
 
@@ -143,5 +184,13 @@ export default function PartyPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function PartyPage() {
+  return (
+    <Suspense fallback={<div className="p-40 text-center uppercase tracking-widest font-black">Joining Session...</div>}>
+      <PartyContent />
+    </Suspense>
   );
 }

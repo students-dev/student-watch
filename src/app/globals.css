@@ -19,6 +19,7 @@
     --accent: #10b981;
     --card-bg: rgba(255, 255, 255, 0.8);
     --grid-line: rgba(99, 102, 241, 0.05);
+    --border: rgba(0, 0, 0, 0.08);
   }
 
   :root.theme-parchment {
@@ -30,6 +31,7 @@
     --accent: #065f46;
     --card-bg: rgba(254, 243, 199, 0.6);
     --grid-line: rgba(146, 64, 14, 0.08);
+    --border: rgba(146, 64, 14, 0.15);
   }
 
   :root.theme-blueprint {
@@ -41,6 +43,7 @@
     --accent: #4ade80;
     --card-bg: rgba(30, 41, 59, 0.7);
     --grid-line: rgba(56, 189, 248, 0.15);
+    --border: rgba(56, 189, 248, 0.3);
   }
 
   :root.theme-cyber {
@@ -52,6 +55,7 @@
     --accent: #22d3ee;
     --card-bg: rgba(20, 20, 20, 0.8);
     --grid-line: rgba(244, 114, 182, 0.12);
+    --border: rgba(244, 114, 182, 0.3);
   }
 
   :root.theme-midnight {
@@ -63,6 +67,7 @@
     --accent: #34d399;
     --card-bg: rgba(15, 23, 42, 0.8);
     --grid-line: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.1);
   }
 
   body {
@@ -88,7 +93,7 @@
 
   .ultra-card {
     background: var(--card-bg);
-    border-color: var(--grid-line);
+    border-color: var(--border);
     @apply relative overflow-hidden rounded-[2.5rem] backdrop-blur-md border shadow-2xl shadow-black/5 transition-all duration-700 hover:shadow-primary/15 hover:-translate-y-3;
   }
 

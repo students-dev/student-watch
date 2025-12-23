@@ -3,38 +3,22 @@
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Media } from '@/types';
-import { tmdbClient } from '@/lib/api';
-import { Star, ArrowLeft, Share2, Info, ShieldCheck, Calendar, BookOpen, Users } from 'lucide-react';
+import { getMediaDetails } from '@/lib/api';
+import { Star, ArrowLeft, Share2, Info, ShieldCheck, Calendar, BookOpen, Users, Clock, Languages, Award } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import MediaCard from '@/components/home/MediaCard';
+import Image from 'next/image';
 
 export default function WatchPage() {
   const { type, id } = useParams();
-  const [media, setMedia] = useState<Media | null>(null);
+  const [media, setMedia] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchDetails() {
-      if (type === 'movie' || type === 'tv') {
-        try {
-          const { data } = await tmdbClient.get(`/${type}/${id}`);
-          setMedia({
-            id: data.id,
-            tmdbId: data.id,
-            title: data.title || data.name,
-            overview: data.overview,
-            posterPath: `https://image.tmdb.org/t/p/w500${data.poster_path}`,
-            backdropPath: `https://image.tmdb.org/t/p/original${data.backdrop_path}`,
-            releaseDate: data.release_date || data.first_air_date,
-            voteAverage: data.vote_average,
-            mediaType: type as 'movie' | 'tv',
-            adult: data.adult,
-            genres: data.genres.map((g: any) => g.name),
-          });
-        } catch (error) {
-          console.error('Error fetching details:', error);
-        }
-      }
+      const data = await getMediaDetails(type as string, id as string);
+      if (data) setMedia(data);
       setLoading(false);
     }
     fetchDetails();
@@ -46,136 +30,157 @@ export default function WatchPage() {
 
   if (loading) return (
     <div className="flex-grow flex items-center justify-center py-40">
-      <div className="relative w-20 h-20">
-        <div className="absolute inset-0 border-4 border-primary/20 rounded-full" />
-        <div className="absolute inset-0 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      <div className="relative w-24 h-24">
+        <div className="absolute inset-0 border-8 border-primary/10 rounded-full" />
+        <div className="absolute inset-0 border-8 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
     </div>
   );
 
+  if (!media) return <div className="p-40 text-center font-black uppercase tracking-[0.5em] text-slate-400">Content not found.</div>;
+
   return (
-    <div className="flex-grow bg-background/30 pb-32">
+    <div className="flex-grow pb-32">
+      {/* Dynamic Backdrop */}
+      <div className="absolute top-0 left-0 w-full h-[70vh] -z-10 opacity-20 blur-3xl">
+         {media.backdropPath && <Image src={media.backdropPath} alt="backdrop" fill className="object-cover" />}
+      </div>
+
       <div className="container mx-auto px-4 py-12">
         <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="mb-10"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12 flex items-center justify-between"
         >
-          <Link href="/" className="inline-flex items-center gap-2 px-6 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-secondary hover:text-primary transition-all shadow-xl shadow-primary/5 font-black text-xs uppercase tracking-widest">
-            <ArrowLeft size={16} />
-            Back to Browse
+          <Link href="/" className="btn-ultra-outline !px-6 !py-3">
+            <ArrowLeft size={18} />
+            Back to Discovery
           </Link>
+          <div className="flex items-center gap-4">
+             <button className="p-4 rounded-2xl bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 hover:text-primary transition-all">
+                <Share2 size={20} />
+             </button>
+          </div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-12">
-          {/* Player Section */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="lg:col-span-2 space-y-10"
-          >
-            <div className="relative aspect-video bg-slate-900 rounded-[3rem] overflow-hidden shadow-2xl shadow-primary/10 border-8 border-white dark:border-slate-800">
+        <div className="grid lg:grid-cols-3 gap-16">
+          {/* Main Column */}
+          <div className="lg:col-span-2 space-y-12">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative aspect-video bg-black rounded-[3.5rem] overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)] border-[12px] border-white dark:border-slate-800"
+            >
               <iframe
                 src={embedUrl}
                 className="absolute inset-0 w-full h-full border-0"
                 allowFullScreen
                 allow="autoplay; encrypted-media"
               />
-            </div>
+            </motion.div>
 
-            <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] shadow-2xl shadow-primary/5 border border-slate-100 dark:border-slate-800">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 pb-8 border-b border-slate-100 dark:border-slate-800">
-                <h1 className="text-4xl font-black tracking-tighter uppercase">{media?.title}</h1>
-                <div className="flex items-center gap-3">
-                   <div className="bg-accent/10 text-accent px-4 py-2 rounded-2xl flex items-center gap-2 text-xs font-black uppercase tracking-widest border border-accent/20">
-                     <ShieldCheck size={16} /> 100% Safe
-                   </div>
+            <div className="space-y-10">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="space-y-4"
+              >
+                <div className="flex flex-wrap items-center gap-3">
+                   <span className="px-4 py-1.5 rounded-xl bg-primary text-white text-[10px] font-black uppercase tracking-widest">{type}</span>
+                   {media.tagline && <span className="text-secondary font-bold italic text-sm">"{media.tagline}"</span>}
                 </div>
-              </div>
+                <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase text-gradient leading-[0.85]">{media.title}</h1>
+              </motion.div>
 
-              <div className="flex flex-wrap items-center gap-6 mb-8">
-                <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-yellow-50 dark:bg-yellow-500/10 text-yellow-600 font-black text-xs border border-yellow-100 dark:border-yellow-500/20">
-                  <Star size={16} fill="currentColor" />
-                  {media?.voteAverage.toFixed(1)} Rating
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 font-black text-xs border border-blue-100 dark:border-blue-500/20">
-                  <Calendar size={16} />
-                  {media?.releaseDate.split('-')[0]}
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-slate-50 dark:bg-slate-800 text-slate-600 font-black text-xs border border-slate-200 dark:border-slate-700 uppercase tracking-widest">
-                  {type}
-                </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                 <div className="p-6 rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
+                    <Star className="mx-auto mb-2 text-gold" size={24} fill="currentColor" />
+                    <p className="text-xl font-black tracking-tighter">{media.voteAverage.toFixed(1)}</p>
+                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">TMDB Rating</p>
+                 </div>
+                 <div className="p-6 rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
+                    <Clock className="mx-auto mb-2 text-primary" size={24} />
+                    <p className="text-xl font-black tracking-tighter">{media.runtime}m</p>
+                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Duration</p>
+                 </div>
+                 <div className="p-6 rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
+                    <Calendar className="mx-auto mb-2 text-accent" size={24} />
+                    <p className="text-xl font-black tracking-tighter">{media.releaseDate.split('-')[0]}</p>
+                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Release Year</p>
+                 </div>
+                 <div className="p-6 rounded-[2rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/20 text-center">
+                    <ShieldCheck className="mx-auto mb-2 text-emerald-500" size={24} />
+                    <p className="text-xl font-black tracking-tighter">Safe</p>
+                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Content Status</p>
+                 </div>
               </div>
 
               <div className="space-y-6">
-                <h3 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400">Overview</h3>
-                <p className="text-secondary leading-relaxed text-lg font-medium">
-                  {media?.overview}
+                <h3 className="text-xs font-black uppercase tracking-[0.5em] text-primary">The Narrative</h3>
+                <p className="text-xl text-secondary leading-relaxed font-medium">
+                  {media.overview}
                 </p>
               </div>
 
-              <div className="mt-10 flex flex-wrap gap-4">
-                {media?.genres.map(genre => (
-                  <span key={genre} className="px-4 py-1.5 bg-primary/5 text-primary border border-primary/10 rounded-full text-[10px] font-black uppercase tracking-widest">
-                    {genre}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800">
-                 <button 
-                   onClick={() => window.location.href = `/party/${Math.random().toString(36).substring(7)}`}
-                   className="btn-ultra !bg-indigo-500 hover:!bg-indigo-600"
-                 >
-                    <Users size={20} />
-                    Start Sync-Watch Party
-                 </button>
+              <div className="space-y-8">
+                <h3 className="text-xs font-black uppercase tracking-[0.5em] text-primary">Top Billing Cast</h3>
+                <div className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide">
+                   {media.cast?.map((person: any) => (
+                     <div key={person.id} className="min-w-[120px] text-center space-y-3">
+                        <div className="relative aspect-square rounded-[2rem] overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl">
+                           <Image 
+                             src={person.profilePath || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop'} 
+                             alt={person.name} 
+                             fill 
+                             className="object-cover" 
+                           />
+                        </div>
+                        <div>
+                           <p className="text-[10px] font-black uppercase tracking-tight leading-none mb-1">{person.name}</p>
+                           <p className="text-[8px] text-slate-400 font-bold uppercase tracking-widest">{person.character}</p>
+                        </div>
+                     </div>
+                   ))}
+                </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Sidebar */}
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="space-y-8"
-          >
-            <div className="bg-white dark:bg-slate-900 p-8 rounded-[3rem] shadow-xl shadow-primary/5 border border-slate-100 dark:border-slate-800">
-              <div className="flex items-center gap-3 mb-6">
-                 <div className="p-2 rounded-xl bg-accent/10 text-accent">
-                   <ShieldCheck size={24} />
-                 </div>
-                 <h3 className="text-lg font-black tracking-tight uppercase">Safe Space</h3>
+          <div className="space-y-12">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="ultra-card p-10 space-y-8"
+            >
+              <div className="space-y-2">
+                 <h2 className="text-2xl font-black uppercase tracking-tighter">Sync-Watch</h2>
+                 <p className="text-xs text-slate-400 font-bold tracking-widest uppercase">Start a shared session</p>
               </div>
-              <p className="text-sm text-secondary mb-8 font-medium leading-relaxed">
-                Every title on **Student-Watch** undergoes a dual-layered filter process. 
-                We ensure your study breaks are free from mature content.
+              <p className="text-sm text-secondary leading-relaxed font-medium">
+                Host a virtual study break! Watch together with friends in a safe, ad-free environment.
               </p>
-              <button className="w-full py-4 px-6 rounded-2xl bg-primary text-white font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
-                <Share2 size={18} />
-                Share Resource
+              <button 
+                onClick={() => window.location.href = `/party/${Math.random().toString(36).substring(7)}?type=${type}&id=${id}`}
+                className="btn-ultra w-full !py-5"
+              >
+                <Users size={20} />
+                Launch Party Room
               </button>
-            </div>
+            </motion.div>
 
-            <div className="p-8 rounded-[3rem] bg-gradient-to-br from-primary to-indigo-600 text-white shadow-2xl shadow-primary/20 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:rotate-12 transition-transform">
-                <BookOpen size={64} />
-              </div>
-              <h3 className="text-xl font-black mb-4 relative z-10 uppercase tracking-tight">Study Hack</h3>
-              <p className="text-sm text-white/80 font-medium leading-relaxed relative z-10">
-                Did you know? Taking a 15-minute cinematic break can boost your information retention by up to 20%!
-              </p>
+            <div className="space-y-8">
+               <h3 className="text-xs font-black uppercase tracking-[0.5em] text-slate-400 px-4">Recommendations</h3>
+               <div className="grid grid-cols-2 gap-6">
+                  {media.recommendations?.map((item: any) => (
+                    <div key={item.id} className="scale-90">
+                       <MediaCard media={item} />
+                    </div>
+                  ))}
+               </div>
             </div>
-
-            <div className="bg-white dark:bg-slate-900 p-8 rounded-[3rem] shadow-xl shadow-primary/5 border border-slate-100 dark:border-slate-800">
-              <h3 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-6">Support</h3>
-              <p className="text-xs text-secondary font-bold leading-relaxed">
-                Notice something inappropriate? <br />
-                <Link href="/about" className="text-primary hover:underline">Report it immediately</Link> and help us keep this space safe.
-              </p>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

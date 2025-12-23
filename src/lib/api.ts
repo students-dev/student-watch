@@ -104,6 +104,50 @@ export async function getTrendingAnime(): Promise<Media[]> {
   }
 }
 
+export async function getMediaDetails(type: string, id: string): Promise<any> {
+  try {
+    const { data } = await tmdbClient.get(`/${type}/${id}`, {
+      params: { append_to_response: 'credits,recommendations,similar,videos' }
+    });
+    return {
+      id: data.id,
+      tmdbId: data.id,
+      title: data.title || data.name,
+      overview: data.overview,
+      posterPath: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : '',
+      backdropPath: data.backdrop_path ? `https://image.tmdb.org/t/p/original${data.backdrop_path}` : '',
+      releaseDate: data.release_date || data.first_air_date,
+      voteAverage: data.vote_average,
+      mediaType: type as 'movie' | 'tv',
+      adult: data.adult,
+      genres: data.genres.map((g: any) => g.name),
+      runtime: data.runtime || (data.episode_run_time ? data.episode_run_time[0] : 0),
+      tagline: data.tagline,
+      cast: data.credits?.cast?.slice(0, 10).map((c: any) => ({
+        id: c.id,
+        name: c.name,
+        character: c.character,
+        profilePath: c.profile_path ? `https://image.tmdb.org/t/p/w185${c.profile_path}` : null,
+      })),
+      recommendations: data.recommendations?.results?.filter((m: any) => !m.adult).slice(0, 12).map((m: any) => ({
+        id: m.id,
+        title: m.title || m.name,
+        overview: m.overview,
+        posterPath: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : '',
+        backdropPath: m.backdrop_path ? `https://image.tmdb.org/t/p/original${m.backdrop_path}` : '',
+        mediaType: type as 'movie' | 'tv',
+        voteAverage: m.vote_average,
+        releaseDate: m.release_date || m.first_air_date || '',
+        adult: m.adult,
+        genres: [],
+      })),
+    };
+  } catch (error) {
+    console.error('Error fetching media details:', error);
+    return null;
+  }
+}
+
 export const CUSTOM_GENRES = {
   EXAM_TIME: {
     name: 'Exam Time',

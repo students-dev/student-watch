@@ -20,11 +20,11 @@ export default function ProfilePage() {
     { id: 'midnight', name: 'Deep Focus', color: 'bg-slate-900' },
   ];
 
-  if (!session) return (
-    <div className="flex items-center justify-center min-h-[70vh]">
-      <p className="text-secondary font-black uppercase tracking-widest">Please sign in to view your profile.</p>
-    </div>
-  );
+  const userIdentity = session?.user || {
+    name: "Guest Student",
+    email: "Sign in to sync your data",
+    image: null
+  };
 
   return (
     <div className="container mx-auto px-4 py-20 max-w-6xl">
@@ -37,17 +37,25 @@ export default function ProfilePage() {
         >
           <div className="ultra-card p-10 text-center">
             <div className="relative inline-block mb-6">
-              <img 
-                src={session.user?.image || ''} 
-                alt="Profile" 
-                className="w-32 h-32 rounded-[2.5rem] border-4 border-primary shadow-2xl mx-auto" 
-              />
-              <div className="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-2xl shadow-xl">
-                <Shield size={20} />
-              </div>
+              {userIdentity.image ? (
+                <img 
+                  src={userIdentity.image} 
+                  alt="Profile" 
+                  className="w-32 h-32 rounded-[2.5rem] border-4 border-primary shadow-2xl mx-auto" 
+                />
+              ) : (
+                <div className="w-32 h-32 rounded-[2.5rem] bg-slate-100 dark:bg-slate-800 border-4 border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-center mx-auto">
+                   <User size={48} className="text-slate-400" />
+                </div>
+              )}
+              {session && (
+                <div className="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-2xl shadow-xl">
+                  <Shield size={20} />
+                </div>
+              )}
             </div>
-            <h1 className="text-3xl font-black tracking-tighter uppercase">{session.user?.name}</h1>
-            <p className="text-slate-400 text-xs font-black uppercase tracking-widest mt-2">{session.user?.email}</p>
+            <h1 className="text-3xl font-black tracking-tighter uppercase">{userIdentity.name}</h1>
+            <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-2">{userIdentity.email}</p>
             
             <div className="mt-10 grid grid-cols-2 gap-4">
                <div className="p-4 rounded-3xl bg-primary/5 border border-primary/10">
@@ -55,7 +63,7 @@ export default function ProfilePage() {
                   <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Bookmarks</p>
                </div>
                <div className="p-4 rounded-3xl bg-accent/5 border border-accent/10">
-                  <p className="text-2xl font-black text-accent">1</p>
+                  <p className="text-2xl font-black text-accent">{session ? '1' : '0'}</p>
                   <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Sessions</p>
                </div>
             </div>

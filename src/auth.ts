@@ -10,13 +10,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user
-      const isOnWatchPage = nextUrl.pathname.startsWith("/watch")
-      if (isOnWatchPage) {
-        if (isLoggedIn) return true
-        return false // Redirect unauthenticated users to login page
-      }
-      return true
+      return true; // Allow all users to access all pages
     },
   },
   pages: {

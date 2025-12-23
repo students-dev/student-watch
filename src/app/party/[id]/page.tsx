@@ -53,14 +53,6 @@ function PartyContent() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  if (!session) {
-    return (
-      <div className="flex items-center justify-center min-h-[70vh]">
-        <p className="font-black uppercase tracking-widest text-secondary">Please sign in to join a party.</p>
-      </div>
-    );
-  }
-
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputText.trim() || isSending) return;
@@ -70,7 +62,7 @@ function PartyContent() {
       await axios.post("/api/party/message", {
         roomId,
         message: inputText,
-        user: session.user?.name || "Student",
+        user: session?.user?.name || "Guest Student",
       });
       setInputText('');
     } catch (error) {
@@ -152,17 +144,20 @@ function PartyContent() {
         </div>
 
         <div className="flex-grow p-6 space-y-4 overflow-y-auto scrollbar-hide">
-           {messages.map((msg, i) => (
-             <div key={i} className={`flex flex-col ${msg.user === session.user?.name ? 'items-end' : 'items-start'}`}>
-                <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 mb-1">{msg.user}</span>
-                <div className={`px-4 py-2 rounded-2xl text-xs font-bold ${
-                  msg.user === 'System' ? 'bg-primary/10 text-primary italic' : 
-                  msg.user === session.user?.name ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-white/10 dark:bg-slate-800 text-secondary border border-white/5'
-                }`}>
-                   {msg.text}
-                </div>
-             </div>
-           ))}
+           {messages.map((msg, i) => {
+             const isMe = msg.user === (session?.user?.name || "Guest Student");
+             return (
+               <div key={i} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
+                  <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 mb-1">{msg.user}</span>
+                  <div className={`px-4 py-2 rounded-2xl text-xs font-bold ${
+                    msg.user === 'System' ? 'bg-primary/10 text-primary italic' : 
+                    isMe ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-white/10 dark:bg-slate-800 text-secondary border border-white/5'
+                  }`}>
+                     {msg.text}
+                  </div>
+               </div>
+             );
+           })}
            <div ref={chatEndRef} />
         </div>
 

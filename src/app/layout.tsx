@@ -7,8 +7,6 @@ import { GraduationCap } from "lucide-react";
 import PageTransition from "@/components/layout/PageTransition";
 import AuthProvider from "@/components/layout/AuthProvider";
 import { LibraryProvider } from "@/context/LibraryContext";
-import MobileNav from "@/components/layout/MobileNav";
-import AppSetup from "@/components/layout/AppSetup";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,27 +28,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    return (
-      <html lang="en">
-        <head>
-          <link rel="manifest" href="/manifest.json" />
-        </head>
-        <body
-  
-                    className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-                  >
-                    <AuthProvider>
-                      <LibraryProvider>
-                        <AppSetup />
-                        <Navbar />
-                        <main className="flex-grow">
-                          <PageTransition>
-                            {children}
-                          </PageTransition>
-                        </main>
-                        <MobileNav />
-                      </LibraryProvider>
-                    </AuthProvider>
+      return (
+        <html lang="en">
+          <head>
+            <link rel="manifest" href="/manifest.json" />
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+            <meta name="theme-color" content="#6366f1" />
+          </head>
+    
+              <body
+                className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+              >
+                <AuthProvider>
+                  <LibraryProvider>
+                    <Navbar />
+                    <main className="flex-grow">
+                      <PageTransition>
+                        {children}
+                      </PageTransition>
+                    </main>
+                  </LibraryProvider>
+                </AuthProvider>
+        
             
                       <footer className="bg-black border-t border-white/5 pt-20 pb-10">
 

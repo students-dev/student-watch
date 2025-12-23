@@ -7,6 +7,8 @@ import { GraduationCap } from "lucide-react";
 import PageTransition from "@/components/layout/PageTransition";
 import AuthProvider from "@/components/layout/AuthProvider";
 import { LibraryProvider } from "@/context/LibraryContext";
+import MobileNav from "@/components/layout/MobileNav";
+import AppSetup from "@/components/layout/AppSetup";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,21 +30,28 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-            <body
-              className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-            >
-              <AuthProvider>
-                <LibraryProvider>
-                  <Navbar />
-                  <main className="flex-grow">
-                    <PageTransition>
-                      {children}
-                    </PageTransition>
-                  </main>
-                </LibraryProvider>
-              </AuthProvider>
+    return (
+      <html lang="en">
+        <head>
+          <link rel="manifest" href="/manifest.json" />
+        </head>
+        <body
+  
+                    className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+                  >
+                    <AuthProvider>
+                      <LibraryProvider>
+                        <AppSetup />
+                        <Navbar />
+                        <main className="flex-grow">
+                          <PageTransition>
+                            {children}
+                          </PageTransition>
+                        </main>
+                        <MobileNav />
+                      </LibraryProvider>
+                    </AuthProvider>
+            
                       <footer className="bg-black border-t border-white/5 pt-20 pb-10">
 
                   <div className="max-w-7xl mx-auto px-4">

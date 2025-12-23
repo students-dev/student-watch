@@ -50,12 +50,12 @@ export default function Hero() {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-6"
         >
-          <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] uppercase text-gradient">
+          <h1 className="text-5xl sm:text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.8] uppercase text-gradient">
             ELEVATE <br />
             <span className="animate-text-reveal">WATCHING.</span>
           </h1>
           
-          <p className="max-w-3xl mx-auto text-xl md:text-2xl text-secondary mb-16 leading-relaxed font-medium tracking-tight px-4">
+          <p className="max-w-3xl mx-auto text-lg md:text-2xl text-secondary mb-12 md:mb-16 leading-relaxed font-medium tracking-tight px-4">
             The world's most sophisticated streaming platform for students. 
             Curated, filtered, and optimized for your academic and mental well-being.
           </p>

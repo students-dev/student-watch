@@ -94,17 +94,17 @@
   .ultra-card {
     background: var(--card-bg);
     border-color: var(--border);
-    @apply relative overflow-hidden rounded-[2.5rem] backdrop-blur-md border shadow-2xl shadow-black/5 transition-all duration-700 hover:shadow-primary/15 hover:-translate-y-3;
+    @apply relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] backdrop-blur-md border shadow-2xl shadow-black/5 transition-all duration-700 hover:shadow-primary/10 hover:-translate-y-2;
   }
 
   .btn-ultra {
     background: rgb(var(--primary-rgb));
-    @apply px-10 py-4 rounded-full text-white font-black uppercase tracking-[0.2em] text-[10px] transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl flex items-center gap-3 shadow-primary/30;
+    @apply px-6 py-3 md:px-10 md:py-4 rounded-full text-white font-black uppercase tracking-[0.2em] text-[8px] md:text-[10px] transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl flex items-center justify-center gap-3 shadow-primary/30;
   }
 
   .btn-ultra-outline {
     border-color: var(--grid-line);
-    @apply px-10 py-4 rounded-full border-2 bg-white/10 backdrop-blur-sm font-black uppercase tracking-[0.2em] text-[10px] transition-all duration-500 hover:border-primary hover:text-primary active:scale-95 flex items-center gap-3;
+    @apply px-6 py-3 md:px-10 md:py-4 rounded-full border-2 bg-white/10 backdrop-blur-sm font-black uppercase tracking-[0.2em] text-[8px] md:text-[10px] transition-all duration-500 hover:border-primary hover:text-primary active:scale-95 flex items-center justify-center gap-3;
   }
 
   .text-gradient {

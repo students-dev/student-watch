@@ -66,16 +66,16 @@ export default function MediaCard({ media }: MediaCardProps) {
           </div>
         </div>
 
-        <div className="p-8">
-          <h3 className="font-black text-base md:text-lg line-clamp-1 group-hover:text-primary transition-colors duration-500 tracking-tight uppercase leading-tight">
+        <div className="p-4 md:p-6">
+          <h3 className="font-black text-sm md:text-base line-clamp-1 group-hover:text-primary transition-colors duration-500 tracking-tight uppercase leading-tight">
             {media.title}
           </h3>
-          <div className="flex items-center gap-3 mt-3">
-             <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">
+          <div className="flex items-center gap-2 mt-2 md:mt-3">
+             <span className="text-[8px] md:text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">
                {media.releaseDate ? media.releaseDate.split('-')[0] : 'TBA'}
              </span>
-             <span className="w-1.5 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800" />
-             <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em] bg-primary/5 px-2 py-0.5 rounded-md border border-primary/10">
+             <span className="w-1 h-1 rounded-full bg-slate-200 dark:bg-slate-800" />
+             <span className="text-[8px] md:text-[10px] font-black text-primary uppercase tracking-[0.3em] bg-primary/5 px-2 py-0.5 rounded-md border border-primary/10">
                {media.mediaType}
              </span>
           </div>

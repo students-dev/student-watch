@@ -66,53 +66,53 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-4 lg:gap-6">
             <form onSubmit={handleSearch} className="relative group">
               <input
                 type="text"
                 placeholder="Search resources..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-6 py-3 rounded-2xl bg-slate-500/5 dark:bg-white/5 border border-transparent focus:bg-white dark:focus:bg-black focus:border-primary/20 focus:outline-none focus:ring-8 focus:ring-primary/5 text-sm w-48 lg:w-80 transition-all duration-500 font-medium text-foreground"
+                className="pl-10 lg:pl-12 pr-4 lg:pr-6 py-2.5 lg:py-3 rounded-2xl bg-slate-500/5 dark:bg-white/5 border border-transparent focus:bg-white dark:focus:bg-black focus:border-primary/20 focus:outline-none focus:ring-8 focus:ring-primary/5 text-xs lg:text-sm w-40 sm:w-48 lg:w-80 transition-all duration-500 font-medium text-foreground"
               />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={18} />
+              <Search className="absolute left-3 lg:left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={16} />
             </form>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 lg:gap-4">
               {session ? (
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 lg:gap-4">
                   <Link 
                     href="/profile"
                     className="flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-white/10 dark:bg-black/10 border border-white/10 hover:border-primary/30 transition-all"
                   >
                     {session.user?.image ? (
-                      <img src={session.user.image} alt="User" className="w-6 h-6 rounded-full" />
+                      <img src={session.user.image} alt="User" className="w-5 h-5 lg:w-6 lg:h-6 rounded-full" />
                     ) : (
-                      <User size={16} className="text-primary" />
+                      <User size={14} className="text-primary" />
                     )}
-                    <span className="text-[10px] font-black uppercase tracking-widest text-secondary hidden lg:inline">
+                    <span className="text-[8px] lg:text-[10px] font-black uppercase tracking-widest text-secondary hidden xl:inline">
                       {session.user?.name}
                     </span>
                   </Link>
                   <button 
                     onClick={() => signOut()}
-                    className="p-3 rounded-2xl bg-white/10 dark:bg-black/10 text-secondary hover:text-red-500 transition-all duration-300"
+                    className="p-2 lg:p-3 rounded-2xl bg-white/10 dark:bg-black/10 text-secondary hover:text-red-500 transition-all duration-300"
                   >
-                    <LogOut size={20} />
+                    <LogOut size={18} />
                   </button>
                 </div>
               ) : (
                 <button 
                   onClick={() => signIn('github')}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-primary text-white font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20"
+                  className="flex items-center gap-2 px-4 lg:px-6 py-2 lg:py-2.5 rounded-2xl bg-primary text-white font-black text-[8px] lg:text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20"
                 >
-                  <LogIn size={18} />
+                  <LogIn size={16} />
                   Sign In
                 </button>
               )}
               
-              <Link href="/credits" className="p-3 rounded-2xl bg-red-500/10 text-red-500 hover:scale-110 hover:rotate-12 transition-all duration-300">
-                <Heart size={20} fill="currentColor" />
+              <Link href="/credits" className="p-2 lg:p-3 rounded-2xl bg-red-500/10 text-red-500 hover:scale-110 hover:rotate-12 transition-all duration-300">
+                <Heart size={18} fill="currentColor" />
               </Link>
             </div>
           </div>

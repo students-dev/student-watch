@@ -39,19 +39,19 @@ export default function Home() {
     <div className="pb-32 mesh-bg min-h-screen">
       <Hero />
 
-      <div className="container mx-auto px-4 mt-12 mb-32">
+      <div className="container mx-auto px-4 mt-8 md:mt-12 mb-16 md:mb-32">
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="p-10 rounded-[3rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-3xl border border-white/20 dark:border-slate-800/20 shadow-2xl flex flex-wrap items-center justify-center gap-8"
+          className="p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-3xl border border-white/20 dark:border-slate-800/20 shadow-2xl flex flex-wrap items-center justify-center gap-4 md:gap-8"
         >
-          <div className="flex flex-col items-center lg:items-start gap-1 w-full lg:w-auto">
-            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-primary">State of Mind</span>
-            <h3 className="text-xl font-black uppercase tracking-tight">Quick Filter</h3>
+          <div className="flex flex-col items-center lg:items-start gap-1 w-full lg:w-auto mb-4 lg:mb-0 text-center lg:text-left">
+            <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.5em] text-primary">State of Mind</span>
+            <h3 className="text-lg md:text-xl font-black uppercase tracking-tight">Quick Filter</h3>
           </div>
           
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
             {[
               { name: 'Exam Ready', color: 'bg-blue-500', href: '/genres/exam_time', icon: <GraduationCap size={14} /> },
               { name: 'Mood Off', color: 'bg-yellow-500', href: '/genres/mood_off', icon: <Smile size={14} /> },
@@ -61,19 +61,19 @@ export default function Home() {
               <Link 
                 key={mood.name}
                 href={mood.href}
-                className="group flex items-center gap-4 px-8 py-4 rounded-[1.5rem] bg-white/50 dark:bg-slate-800/50 hover:bg-primary transition-all duration-500 hover:scale-105 active:scale-95 border border-white/20 shadow-xl shadow-primary/5"
+                className="group flex items-center gap-3 md:gap-4 px-4 py-3 md:px-8 md:py-4 rounded-xl md:rounded-[1.5rem] bg-white/50 dark:bg-slate-800/50 hover:bg-primary transition-all duration-500 hover:scale-105 active:scale-95 border border-white/20 shadow-xl shadow-primary/5"
               >
-                <div className={`p-2 rounded-lg ${mood.color} text-white group-hover:bg-white group-hover:text-primary transition-colors`}>
+                <div className={`p-1.5 md:p-2 rounded-lg ${mood.color} text-white group-hover:bg-white group-hover:text-primary transition-colors`}>
                   {mood.icon}
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-secondary group-hover:text-white transition-colors">{mood.name}</span>
+                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-secondary group-hover:text-white transition-colors">{mood.name}</span>
               </Link>
             ))}
           </div>
         </motion.div>
       </div>
 
-      <div className="container mx-auto px-4 space-y-40">
+      <div className="container mx-auto px-4 space-y-24 md:space-y-40">
         {sections.map((section, idx) => (
           <motion.section 
             key={idx}
@@ -83,21 +83,21 @@ export default function Home() {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: idx * 0.1 }}
             className="relative"
           >
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                   <div className="p-4 rounded-[1.5rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-2xl shadow-2xl border border-white/20 dark:border-slate-800/20 text-primary">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-16 gap-6 md:gap-8">
+              <div className="space-y-3 md:space-y-4">
+                <div className="flex items-center gap-3 md:gap-4">
+                   <div className="p-3 md:p-4 rounded-xl md:rounded-[1.5rem] bg-white/40 dark:bg-slate-900/40 backdrop-blur-2xl shadow-2xl border border-white/20 dark:border-slate-800/20 text-primary">
                      {section.icon}
                    </div>
                    <div className="flex flex-col">
-                     <span className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-400">Premium Curation</span>
-                     <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase text-gradient leading-none">{section.title}</h2>
+                     <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.5em] text-slate-400">Premium Curation</span>
+                     <h2 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase text-gradient leading-none">{section.title}</h2>
                    </div>
                 </div>
               </div>
               <Link 
                 href={section.title.toLowerCase().includes('movie') ? '/movies' : '/anime'} 
-                className="btn-ultra-outline !px-10 !py-4 w-fit"
+                className="btn-ultra-outline !px-6 md:!px-10 !py-3 md:!py-4 w-fit"
               >
                 View Library
               </Link>
